@@ -1,13 +1,34 @@
-win = new BrowserWindow({width: 1000, height: 1000,icon: __dirname + '/logo.png'});
-
-new Notification(NOTIFICATION_TITLE, { body: NOTIFICATION_BODY })
-  .onclick = () => document.getElementById("output").innerText = CLICK_MESSAGE
-
-  const updateOnlineStatus = () => {
-    document.getElementById('status').innerHTML = navigator.onLine ? 'online' : 'offline'
-  }
+window.addEventListener("DOMContentLoaded", () => {
+    const menuButton = document.getElementById("menu-btn");
+    const minimizeButton = document.getElementById("minimize-btn");
+    const maxUnmaxButton = document.getElementById("max-unmax-btn");
+    const closeButton = document.getElementById("close-btn");
   
-  window.addEventListener('online', updateOnlineStatus)
-  window.addEventListener('offline', updateOnlineStatus)
+    menuButton.addEventListener("click", e => {
+      // Opens menu at (x,y) coordinates of mouse click on the hamburger icon.
+      window.openMenu(e.x, e.y);
+    });
   
-  updateOnlineStatus()
+    minimizeButton.addEventListener("click", e => {
+      window.minimizeWindow();
+    });
+  
+    maxUnmaxButton.addEventListener("click", e => {
+      const icon = maxUnmaxButton.querySelector("i.far");
+  
+      window.maxUnmaxWindow();
+  
+      // Change the middle maximize-unmaximize icons.
+      if (window.isWindowMaximized()) {
+        icon.classList.remove("fa-square");
+        icon.classList.add("fa-clone");
+      } else {
+        icon.classList.add("fa-square");
+        icon.classList.remove("fa-clone");
+      }
+    });
+  
+    closeButton.addEventListener("click", e => {
+      window.closeWindow();
+    });
+  });
